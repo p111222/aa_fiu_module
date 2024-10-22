@@ -29,10 +29,11 @@ const VerificationPage = () => {
 
         setError('');
         const reqDate = moment.utc(Date.now()).format('DDMMYYYYHHmmSSS');
-        const srcRef = uuidv4();
+        const srcRef = "b1c46726-c867-4ea8-9c4e-70a6bad7e63a";
+        const txnid=uuidv4();
         const redirectUrl = `${window.location.origin}/user/status`;
 
-        axiosPrivate.post('/redirect/generateredirecturl', { aaId, reqDate, sessionId: user.sessionId, srcRef, redirectUrl })
+        axiosPrivate.post('/redirect/generateredirecturl', { aaId, reqDate, sessionId: user.sessionId, txnid, srcRef, redirectUrl })
             .then((res) => {
                 window.location.href = res.data.redirectUrl;
             }).catch((error) => {

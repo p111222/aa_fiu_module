@@ -2,10 +2,13 @@ import React, { useContext, useState } from 'react';
 import ManageSearchIcon from '@mui/icons-material/ManageSearch';
 // import { makeRequest } from '../../Axios';
 import { useNavigate } from 'react-router-dom';
-import moment from 'moment';
+// import moment from 'moment';
+import moment from 'moment-timezone';
 import { AuthContext } from '../../Context/AuthContext';
 import { v4 as uuidv4 } from 'uuid';
 import useAxiosPrivate from '../../Hooks/useAxiosPrivate';
+import qs from 'qs';
+import { Buffer } from 'buffer';
 
 const VerificationPage = () => {
     const [aaId, setAaId] = useState('');
@@ -26,20 +29,74 @@ const VerificationPage = () => {
             setError('Invalid AA ID format. Please use the format alphanumeric@alphanumeric.');
             return;
         }
-
+    
         setError('');
-        const reqDate = moment.utc(Date.now()).format('DDMMYYYYHHmmSSS');
+        const reqdate = moment.utc().format('DDMMYYYYHHmmss');
+        const txnid = uuidv4();
         const srcRef = "b1c46726-c867-4ea8-9c4e-70a6bad7e63a";
-        const txnid=uuidv4();
         const redirectUrl = `${window.location.origin}/user/status`;
-
-        axiosPrivate.post('/redirect/generateredirecturl', { aaId, reqDate, sessionId: user.sessionId, txnid, srcRef, redirectUrl })
+        console.log("reqdate: " + reqdate);
+    
+        const requestorType = "FIU"; 
+        const fipid = "fid1";
+        const email = "user@example.com";
+        const dob = "01011990";
+        const pan = "BLOPJ9807C";
+    
+        axiosPrivate.post('http://localhost:8080/api/redirect/generateredirecturl',
+            qs.stringify({
+                aaId,
+                reqdate,
+                sessionId: user.sessionId,
+                txnid,
+                srcRef,
+                redirectUrl,
+                // requestorType,
+                fipid,
+                email,
+                dob,
+                pan
+            }),
+            {
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            }
+        )
             .then((res) => {
-                window.location.href = res.data.redirectUrl;
+                const redirectUrl = res.data.redirectUrl;
+    
+                const url = new URL(redirectUrl);
+    
+                const fi = url.searchParams.get('fi');
+                const ecreq = url.searchParams.get('ecreq');
+                const requestorType = url.searchParams.get('requestorType');
+    
+                console.log("fi: " + fi);
+                console.log("ecreq: " + ecreq);
+                console.log("requestorType: " + requestorType);
+    
+                const encodedEcreq = encodeURIComponent(ecreq);
+                console.log("encodedEcreq: " + encodedEcreq);
+    
+                // Construct the final redirect URL conditionally
+                let finalRedirectUrl = `${url.origin}${url.pathname}?fi=${fi}&reqdate=${reqdate}&ecreq=${encodedEcreq}`;
+    
+                // Append requestorType only if it has a value
+                if (requestorType) {
+                    // const encodedRequestorType = encodeURIComponent(requestorType);
+                    // finalRedirectUrl += `&requestorType=${encodedRequestorType}`;
+                    finalRedirectUrl += `&requestorType=${requestorType}`;
+                }
+    
+                console.log("finalRedirectUrl: " + finalRedirectUrl);
+                window.location.href = finalRedirectUrl;
+                // window.location.href = res.data.redirectUrl;
             }).catch((error) => {
                 console.log(error);
             });
     }
+    
 
     return (
         <>

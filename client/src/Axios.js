@@ -1,5 +1,5 @@
 import axios from 'axios';
-const BASE_URL = 'http://api.kriate.co.in:8344/api';
+const BASE_URL = 'http://localhost:8081/api';
 
 export default axios.create({
     baseURL: BASE_URL

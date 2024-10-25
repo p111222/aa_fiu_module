@@ -11,7 +11,6 @@ import StatusPage from './Pages/User/StatusPage.jsx'
 import { AuthContext } from './Context/AuthContext';
 import useAxiosPrivate from './Hooks/useAxiosPrivate.js';
 // import {axiosPrivate}  from "./Axios";
-
 const App = () => {
 
   const { user, setUser, sessionValidity, setSessionValidity, setAccessToken } = useContext(AuthContext);
@@ -23,10 +22,14 @@ const App = () => {
     const fetchUserDetails = async () => {
       try {
         const sessionResponse = await axiosPrivate.get('/auth/check-session');
-        setSessionValidity(sessionResponse.data.valid)
+        console.log("sessionResponse.data.valid"+sessionResponse.data);
+        setSessionValidity(sessionResponse.data)
         const regenerateTokenResponse = await axiosPrivate.get('/auth/regenerate-accesstoken');
-        setAccessToken(regenerateTokenResponse.data.accessToken);
-        const userResponse = await axiosPrivate.get('/auth/get-loggedin-user');
+        console.log("regenerateTokenResponse.data"+regenerateTokenResponse.data);
+        setAccessToken(regenerateTokenResponse.data);
+        const userResponse = await axiosPrivate.get('/auth/logged-in-user');
+        console.log("userResponse.data"+userResponse.data.id);
+        // const userResponse = await axiosPrivate.get('/auth/get-loggedin-user');
         setUser(userResponse.data);
       } catch (error) {
         console.log(error);
@@ -42,6 +45,9 @@ const App = () => {
     }
   }, [user, setUser]);
 
+  console.log("user"+user);
+  
+
   useEffect(() => {
     if (sessionValidity === "invalid" && window.location.href.includes("user")) {
       setShowModal(true)
@@ -51,7 +57,7 @@ const App = () => {
   }, [sessionValidity])
 
   const handleLogout = () => {
-    axiosPrivate.get('/auth/logout')
+    axiosPrivate.post('/auth/logout')
       .then((res) => {
         console.log("Logged Out");
         window.location.href = '/login';

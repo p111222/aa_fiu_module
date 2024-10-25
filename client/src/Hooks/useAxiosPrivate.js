@@ -18,7 +18,8 @@ const useAxiosPrivate = () => {
 
                 try {
                     const response = await axiosPrivate.get(`/auth/check-session`);
-                    if (response.data.valid === 'valid') {
+                    console.log("response.data.valid"+response.data);
+                    if (response.data === 'valid') {
                         setSessionValidity('valid');
                         if (!config.headers['Authorization']) {
                             config.headers['Authorization'] = `Bearer ${accessToken}`;

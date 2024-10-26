@@ -42,9 +42,9 @@ const VerificationPage = () => {
         const email = "user@example.com";
         const dob = "01011990";
         const pan = "BLOPJ9807C";
-    
+      
         // axiosPrivate.post('http://localhost:8080/api/redirect/generateredirecturl',
-        axiosPrivate.post('http://api.kriate.co.in:8344/api/redirect/generateredirecturl',
+        axiosPrivate.post('http://43.204.108.73:8344/api/redirect/generateredirecturl',
             qs.stringify({
                 aaId,
                 reqdate,

@@ -17,7 +17,7 @@ const useAxiosPrivate = () => {
                 }
 
                 try {
-                    const response = await axiosPrivate.get(`/auth/check-session`);
+                    const response = await axiosPrivate.get(`/api/auth/check-session`);
                     console.log("response.data.valid"+response.data);
                     if (response.data === 'valid') {
                         setSessionValidity('valid');

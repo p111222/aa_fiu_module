@@ -103,7 +103,7 @@ const LoginPage = () => {
         const encryptedData = iv.concat(encrypted.ciphertext).toString(CryptoJS.enc.Base64);
     
         try {
-            const res = await axiosPrivate.post("/auth/login", { data: encryptedData });
+            const res = await axiosPrivate.post("/api/auth/login", { data: encryptedData });
             if (res.status === 200) {
                 setUser({
                     userName: res.data.userName,

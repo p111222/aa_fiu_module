@@ -21,13 +21,13 @@ const App = () => {
   useEffect(() => {
     const fetchUserDetails = async () => {
       try {
-        const sessionResponse = await axiosPrivate.get('/auth/check-session');
+        const sessionResponse = await axiosPrivate.get('/api/auth/check-session');
         console.log("sessionResponse.data.valid"+sessionResponse.data);
         setSessionValidity(sessionResponse.data)
-        const regenerateTokenResponse = await axiosPrivate.get('/auth/regenerate-accesstoken');
+        const regenerateTokenResponse = await axiosPrivate.get('/api/auth/regenerate-accesstoken');
         console.log("regenerateTokenResponse.data"+regenerateTokenResponse.data);
         setAccessToken(regenerateTokenResponse.data);
-        const userResponse = await axiosPrivate.get('/auth/logged-in-user');
+        const userResponse = await axiosPrivate.get('/api/auth/logged-in-user');
         console.log("userResponse.data"+userResponse.data.id);
         // const userResponse = await axiosPrivate.get('/auth/get-loggedin-user');
         setUser(userResponse.data);
@@ -57,7 +57,7 @@ const App = () => {
   }, [sessionValidity])
 
   const handleLogout = () => {
-    axiosPrivate.post('/auth/logout')
+    axiosPrivate.post('/api/auth/logout')
       .then((res) => {
         console.log("Logged Out");
         window.location.href = '/login';

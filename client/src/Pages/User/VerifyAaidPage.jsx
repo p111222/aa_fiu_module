@@ -31,11 +31,11 @@ const VerificationPage = () => {
         }
     
         setError('');
-        const reqdate = moment.utc().format('DDMMYYYYHHmmss');
+        // const reqdate = moment.utc().format('DDMMYYYYHHmmss');
         const txnid = uuidv4();
-        const srcRef = "b1c46726-c867-4ea8-9c4e-70a6bad7e63a";
+        const srcRef = "113d4b92-13e4-4452-82d7-b420410e2897";
         const redirectUrl = `${window.location.origin}/user/status`;
-        console.log("reqdate: " + reqdate);
+        // console.log("reqdate: " + reqdate);
     
         const requestorType = "FIU"; 
         const fipid = "fid1";
@@ -47,12 +47,12 @@ const VerificationPage = () => {
         axiosPrivate.post('http://43.204.108.73:8344/api/redirect/generateredirecturl',
             qs.stringify({
                 aaId,
-                reqdate,
+                // reqdate,
                 sessionId: user.sessionId,
                 txnid,
                 srcRef,
                 redirectUrl,
-                // requestorType,
+                requestorType,
                 fipid,
                 email,
                 dob,
@@ -66,12 +66,14 @@ const VerificationPage = () => {
         )
             .then((res) => {
                 const redirectUrl = res.data.redirectUrl;
-    
+                console.log("redirectUrl"+redirectUrl);
+                
                 const url = new URL(redirectUrl);
     
                 const fi = url.searchParams.get('fi');
+                const reqdate = url.searchParams.get('reqdate');
                 const ecreq = url.searchParams.get('ecreq');
-                const requestorType = url.searchParams.get('requestorType');
+                // const requestorType = url.searchParams.get('requestorType');
     
                 console.log("fi: " + fi);
                 console.log("ecreq: " + ecreq);
@@ -84,11 +86,11 @@ const VerificationPage = () => {
                 let finalRedirectUrl = `${url.origin}${url.pathname}?fi=${fi}&reqdate=${reqdate}&ecreq=${encodedEcreq}`;
     
                 // Append requestorType only if it has a value
-                if (requestorType) {
+                // if (requestorType) {
                     // const encodedRequestorType = encodeURIComponent(requestorType);
                     // finalRedirectUrl += `&requestorType=${encodedRequestorType}`;
-                    finalRedirectUrl += `&requestorType=${requestorType}`;
-                }
+                    // finalRedirectUrl += `&requestorType=${requestorType}`;
+                // }
     
                 console.log("finalRedirectUrl: " + finalRedirectUrl);
                 window.location.href = finalRedirectUrl;

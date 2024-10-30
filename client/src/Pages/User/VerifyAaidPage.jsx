@@ -44,7 +44,7 @@ const VerificationPage = () => {
         const pan = "BLOPJ9807C";
       
         // axiosPrivate.post('http://localhost:8080/api/redirect/generateredirecturl',
-        axiosPrivate.post('http://43.204.108.73:8344/api/redirect/generateredirecturl',
+        axiosPrivate.post('/redirect/generateredirecturl',
             qs.stringify({
                 aaId,
                 // reqdate,

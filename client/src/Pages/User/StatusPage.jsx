@@ -20,7 +20,7 @@ const StatusPage = () => {
     useEffect(() => {
         const fetchStatus = async () => {
             try {
-                const res = await axiosPrivate.post('http://api.kriate.co.in:8344/api/redirect/showresult', { fi, resdate, ecres });
+                const res = await axiosPrivate.post('/api/redirect/showresult', { fi, resdate, ecres });
                 if (res.status === 200) {
                     setResult(res.data.result)
                 }

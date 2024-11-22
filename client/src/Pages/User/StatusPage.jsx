@@ -6,6 +6,7 @@ import moment from 'moment'
 import { AuthContext } from '../../Context/AuthContext';
 // import { View, Text, StyleSheet } from 'react-native';
 // import { Divider } from 'react-native-paper';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
 
 const StatusPage = () => {
     const [searchParams] = useSearchParams();
@@ -91,7 +92,7 @@ const StatusPage = () => {
 
     return (
         <>
-            <div className='flex items-center justify-center h-screen'>
+            {/* <div className='flex items-center justify-center h-screen'>
                 <div className='flex flex-col w-[20em] bg-gray-100 p-4 gap-2 rounded-lg translate-y-[-5em]'>
                     <div className='flex items-center '>
                         <p className='w-[8em] text-start font-semibold'>FI</p>
@@ -117,7 +118,37 @@ const StatusPage = () => {
                         <p className='ms-2'>{`${result.txnid.substring(0, 8)}...`}</p>
                     </div>
                 </div>
-            </div>
+            </div> */}
+
+            <TableContainer component={Paper} className="w-[20em] mx-auto mt-10">
+                <Table>
+                    <TableHead>
+                        <TableRow>
+                            <TableCell align="center" colSpan={2} style={{ fontWeight: 'bold', fontSize: '1.2em' }}>
+                                Result Details
+                            </TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        <TableRow>
+                            <TableCell style={{ fontWeight: 'bold', width: '50%' }}>FI</TableCell>
+                            <TableCell>{result.fi}</TableCell>
+                        </TableRow>
+                        <TableRow>
+                            <TableCell style={{ fontWeight: 'bold' }}>Status</TableCell>
+                            <TableCell>{result.status === "S" ? "Success" : "Failure"}</TableCell>
+                        </TableRow>
+                        <TableRow>
+                            <TableCell style={{ fontWeight: 'bold' }}>Response Date</TableCell>
+                            <TableCell>{moment(parseInt(resdate, 10)).format('DD/MM/YYYY')}</TableCell>
+                        </TableRow>
+                        <TableRow>
+                            <TableCell style={{ fontWeight: 'bold' }}>Transaction Id</TableCell>
+                            <TableCell>{`${result.txnid.substring(0, 8)}...`}</TableCell>
+                        </TableRow>
+                    </TableBody>
+                </Table>
+            </TableContainer>
         </>
     )
 };

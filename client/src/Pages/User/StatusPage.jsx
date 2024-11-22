@@ -23,6 +23,8 @@ const StatusPage = () => {
             try {
                 const res = await axiosPrivate.post('/api/redirect/showresult', { fi, resdate, ecres });
                 if (res.status === 200) {
+                    console.log(res.data.result);
+                    
                     setResult(res.data.result)
                 }
             } catch (error) {
@@ -89,6 +91,8 @@ const StatusPage = () => {
     //         </div>
     //     )
     // }
+
+    
 
     return (
         <>

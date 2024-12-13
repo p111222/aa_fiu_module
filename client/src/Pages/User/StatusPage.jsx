@@ -13,7 +13,7 @@ const StatusPage = () => {
     const [searchParams] = useSearchParams();
     const [result, setResult] = useState(null)
     const [loading, setLoading] = useState(true)
-    const { user, aaId } = useContext(AuthContext)
+    const { user, accountAggregatorId } = useContext(AuthContext)
     const axiosPrivate = useAxiosPrivate();
     const fi = searchParams.get('fi');
     const resdate = searchParams.get('resdate');
@@ -22,7 +22,7 @@ const StatusPage = () => {
     useEffect(() => {
         const fetchStatus = async () => {
             try {
-                const res = await axiosPrivate.post('/api/redirect/showresult', { aaId, fi, resdate, ecres });
+                const res = await axiosPrivate.post('/api/redirect/showresult', { accountAggregatorId, fi, resdate, ecres });
                 if (res.status === 200) {
                     console.log(res.data);
                     

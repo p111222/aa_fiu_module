@@ -9,10 +9,11 @@ import { AuthContext } from '../../Context/AuthContext';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
 
 const StatusPage = () => {
+
     const [searchParams] = useSearchParams();
     const [result, setResult] = useState(null)
     const [loading, setLoading] = useState(true)
-    const { user } = useContext(AuthContext)
+    const { user, aaId } = useContext(AuthContext)
     const axiosPrivate = useAxiosPrivate();
     const fi = searchParams.get('fi');
     const resdate = searchParams.get('resdate');
@@ -21,9 +22,9 @@ const StatusPage = () => {
     useEffect(() => {
         const fetchStatus = async () => {
             try {
-                const res = await axiosPrivate.post('/api/redirect/showresult', { fi, resdate, ecres });
+                const res = await axiosPrivate.post('/api/redirect/showresult', { aaId, fi, resdate, ecres });
                 if (res.status === 200) {
-                    console.log(res.data.result);
+                    console.log(res.data);
                     
                     setResult(res.data.result)
                 }

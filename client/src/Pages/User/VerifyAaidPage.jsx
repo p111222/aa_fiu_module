@@ -11,12 +11,12 @@ import qs from 'qs';
 import { Buffer } from 'buffer';
 
 const VerificationPage = () => {
-    const [aaId, setAaId] = useState('');
+    // const [aaId, setAaId] = useState('');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
     const axiosPrivate = useAxiosPrivate();
-    const { user } = useContext(AuthContext);
+    const { user, aaId, setAaId } = useContext(AuthContext);
 
     const handleAaId = (e) => {
         const aaIdValue = e.target.value;

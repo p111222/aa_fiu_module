@@ -9,7 +9,7 @@ const FiuLayout = () => {
     const axiosPrivate = useAxiosPrivate();
 
     const handleLogout = () => {
-        axiosPrivate.post('/auth/logout')
+        axiosPrivate.post('/api/auth/logout')
             .then((res) => {
                 console.log("Logged Out");
                 window.location.reload();

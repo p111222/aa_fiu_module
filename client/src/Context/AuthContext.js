@@ -4,7 +4,7 @@ export const AuthContext = createContext();
 
 export const AuthContextProvider = ({ children }) => {
     const [user, setUser] = useState(null)
-    const [aaId, setAaId] = useState(null)
+    const [aaId, setAaId] = useState('')
     const [accessToken, setAccessToken] = useState(null)
     const [sessionValidity, setSessionValidity] = useState(null);
 

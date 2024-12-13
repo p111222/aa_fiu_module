@@ -33,7 +33,7 @@ const VerificationPage = () => {
         setError('');
         // const reqdate = moment.utc().format('DDMMYYYYHHmmss');
         const txnid = uuidv4();
-        const srcRef = "91787218-06d1-4e9f-adab-45d1fbcb11d9";
+        const srcRef = "63b25109-5bb0-474b-98f4-bcb9f454a9ed";
         const redirectUrl = `${window.location.origin}/user/status`;
         // console.log("reqdate: " + reqdate);
     
